@@ -49,6 +49,8 @@ export function notify({
     const container = getContainer();
 
     container.insertAdjacentHTML('beforeend', template);
+
+    setTimeout(() => closeNotify(index), timeout)
 }
 
 export function closeNotify(index) {
@@ -61,6 +63,10 @@ export function closeNotify(index) {
     }
 
     if (!alert) {
-        
+        console.warn('Alert not found');
+        return;
     }
+
+    const container = getContainer();
+    container.removeChild(alert);
 }

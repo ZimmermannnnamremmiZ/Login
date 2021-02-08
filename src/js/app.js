@@ -32,12 +32,12 @@ async function onSubmit() {
         await login(inputEmail.value, inputPassword.value);
         form.reset();
         // show success notify
-        // notify({ msg: 'Sogin success', classM\Name: 'alert-success', timeout: 1000 })
+        notify({ msg: 'Login success', className: 'alert-success'})
     } catch(err) {
         // show error notify
+        notify({msg: 'Login faild', className: 'alert-danger'})
     }
 }
 
-notify({ msg: 'Some notification 1', className: 'alert-danger' });
-notify({ msg: 'Some notification 1', className: 'alert-warning' });
-notify({ msg: 'Some notification 1', className: 'alert-primary' });
+
+
