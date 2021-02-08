@@ -5,6 +5,7 @@ import UI from './config/ui.config';
 import { validate } from './helpers/validate';
 import { showInputError, removeInputError } from './views/form'
 import { login } from './services/auth.service';
+import { notify } from './views/notifications'
 
 const { form, inputEmail, inputPassword } = UI;
 const inputs = [inputEmail, inputPassword];
@@ -36,3 +37,7 @@ async function onSubmit() {
         // show error notify
     }
 }
+
+notify({ msg: 'Some notification 1', className: 'alert-danger' });
+notify({ msg: 'Some notification 1', className: 'alert-warning' });
+notify({ msg: 'Some notification 1', className: 'alert-primary' });
