@@ -174,9 +174,11 @@ btn_reg.addEventListener('click', () => {
   block1.insertAdjacentHTML('afterend', reg_table);
 }, {
   once: true
-})
+});
 
 const form_registr = document.forms['reg_form']
-form_registr.addEventListener('submit', (e) => {
-  e.preventDefault();
-});
+setTimeout(()=> console.log(form_registr), 5000)
+// form_registr.addEventListener('submit', (e) => {
+//   e.preventDefault();
+//   console.log('vdfjfdjfkfjkdjfdkjfkdf')
+// });
