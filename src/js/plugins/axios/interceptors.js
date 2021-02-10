@@ -1,8 +1,13 @@
 const lsTokenKey = 'my_app_token';
 
 function setToken(req) {
-    console.log(req);
-
+    const isAuthUrl = req.url.includes('auth');
+    // если текущий request не идёт на адрес аутентификации
+    if (!isAuthUrl) {
+        const token = localStorage.getItem(lsTokenKey);
+        // x-access-token - заголовок конкретно для данного сервера
+        req.headers['x-access-token'] = token;
+    }
     return req;
 }
 
@@ -20,8 +25,13 @@ function getClearResponse(res) {
     return res.data;
 }
 
+function onError(err) {
+    console.dir(err);
+    return Promise.reject(err)
+}
+
 export default function (axios) {
     axios.interceptors.request.use(setToken);
     axios.interceptors.response.use(setTokenOnLogin);
-    axios.interceptors.response.use(getClearResponse);
+    axios.interceptors.response.use(getClearResponse, onError);
 }
