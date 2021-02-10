@@ -3,71 +3,73 @@ import '../css/style.css';
 
 import UI from './config/ui.config';
 import {
-    validate
+  validate
 } from './helpers/validate';
 import {
-    showInputError,
-    removeInputError
+  showInputError,
+  removeInputError
 } from './views/form'
 import {
-    login
+  login
 } from './services/auth.service';
 import {
-    notify
+  notify
 } from './views/notifications';
 import {
-    getNews
+  getNews
 } from './services/news.services'
 
 const {
-    form,
-    inputEmail,
-    inputPassword
+  form,
+  inputEmail,
+  inputPassword
 } = UI;
 const inputs = [inputEmail, inputPassword];
 
 // Events
 form.addEventListener('submit', e => {
-    e.preventDefault();
-    onSubmit();
+  e.preventDefault();
+  onSubmit();
 });
 inputs.forEach(el => el.addEventListener('focus', () => removeInputError(el)))
 
 // Handlers
 async function onSubmit() {
-    const isValidForm = inputs.every((el) => {
-        const isValidInput = validate(el);
-        if (!isValidInput) {
-            showInputError(el);
-        }
-        return isValidInput;
-    });
-
-    if (!isValidForm) return;
-
-    try {
-        await login(inputEmail.value, inputPassword.value);
-        await getNews();
-        form.reset();
-        // show success notify
-        notify({
-            msg: 'Login success',
-            className: 'alert-success'
-        })
-    } catch (err) {
-        // show error notify
-        notify({
-            msg: 'Login faild',
-            className: 'alert-danger'
-        })
+  const isValidForm = inputs.every((el) => {
+    const isValidInput = validate(el);
+    if (!isValidInput) {
+      showInputError(el);
     }
+    return isValidInput;
+  });
+
+  if (!isValidForm) return;
+
+  try {
+    await login(inputEmail.value, inputPassword.value);
+    await getNews();
+    form.reset();
+    // show success notify
+    notify({
+      msg: 'Login success',
+      className: 'alert-success'
+    })
+  } catch (err) {
+    // show error notify
+    notify({
+      msg: 'Login faild',
+      className: 'alert-danger'
+    })
+  }
 }
 
 // Registration
-const btn_reg = document.getElementById('reg')
+const btn_reg = document.getElementById('reg');
 const reg_table = `
+<div class="form-card card ml-auto" style="width: 550px; height: 960px">
+<div class="card-body">
 <h4 class="card-title" style="margin-top: 30px">Registration</h4>
-<form name="loginForm">
+<form name="reg_form">
 <div class="form-group">
   <label for="email">Email address</label>
   <input
@@ -130,9 +132,9 @@ const reg_table = `
     data-required="phone"
   />
 </div>
-<div class="form-group" style="margin-top: 35px">
-  <label for="gender_orientation" style="width: 34%">Gender orientation</label>
-  <select class="form-select" style="width: 65%">
+<div class="form-group">
+  <label for="gender_orientation">Gender orientation</label>
+  <select class="form-select">
   <option value="1">Male</option>
   <option value="2">Female</option>
   </select>
@@ -158,12 +160,23 @@ const reg_table = `
   />
 </div>
 <div class="form-group" style="margin-top: 35px">
-  <label for="country" style="width: 34%">Birthday</label>
-  <input type="date" id="date"
-  value="YYYY-MM-DD" style="width: 65%">
+  <label for="country">Birthday</label>
+  <input type="date" id="date">
 </div>
-<button type="button" class="btn btn-primary">Register</button>
+<input type="submit" class="btn btn-primary" id="post_reg" value="Register">
+</form>
+</div>
+</div>
 `
+
+const block1 = document.getElementById('block1');
 btn_reg.addEventListener('click', () => {
-    form.insertAdjacentHTML('beforeend', reg_table);
-}, { once: true })
+  block1.insertAdjacentHTML('afterend', reg_table);
+}, {
+  once: true
+})
+
+const form_registr = document.forms['reg_form']
+form_registr.addEventListener('submit', (e) => {
+  e.preventDefault();
+});
