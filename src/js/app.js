@@ -66,7 +66,7 @@ async function onSubmit() {
 // Registration
 const btn_reg = document.getElementById('reg');
 const reg_table = `
-<div class="form-card card ml-auto" style="width: 550px; height: 960px">
+<div class="form-card card ml-auto">
 <div class="card-body">
 <h4 class="card-title" style="margin-top: 30px">Registration</h4>
 <form name="reg_form">
@@ -132,9 +132,9 @@ const reg_table = `
     data-required="phone"
   />
 </div>
-<div class="form-group">
-  <label for="gender_orientation">Gender orientation</label>
-  <select class="form-select">
+<div class="form-group" style="margin-top: 35px">
+  <label for="gender_orientation" style="width: 39%">Gender orientation</label>
+  <select class="form-select" style="width: 60%">
   <option value="1">Male</option>
   <option value="2">Female</option>
   </select>
@@ -142,7 +142,7 @@ const reg_table = `
 <div class="form-group">
   <label for="city">City</label>
   <input
-    type="number"
+    type="text"
     class="form-control"
     id="city"
     placeholder="City"
@@ -152,7 +152,7 @@ const reg_table = `
 <div class="form-group">
   <label for="country">Country</label>
   <input
-    type="number"
+    type="text"
     class="form-control"
     id="country"
     placeholder="Country"
@@ -160,10 +160,10 @@ const reg_table = `
   />
 </div>
 <div class="form-group" style="margin-top: 35px">
-  <label for="country">Birthday</label>
-  <input type="date" id="date">
+  <label for="country" style="width: 39%">Birthday</label>
+  <input type="date" id="date" style="width: 60%">
 </div>
-<input type="submit" class="btn btn-primary" id="post_reg" value="Register">
+<input type="submit" class="btn btn-primary" id="post_reg" value="Register" style="margin-top: 15px">
 </form>
 </div>
 </div>
@@ -171,14 +171,26 @@ const reg_table = `
 
 const block1 = document.getElementById('block1');
 btn_reg.addEventListener('click', () => {
-  block1.insertAdjacentHTML('afterend', reg_table);
+  block1.innerHTML = '';
+  block1.innerHTML = reg_table;
+  const form_registr = document.forms['reg_form']
+  form_registr.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const reg_res = {
+      email: document.getElementById('email'),
+      password: `${document.getElementById('password')}`,
+      nickname: `${document.getElementById('nickname')}`,
+      first_name: `${document.getElementById('first_name')}`,
+      last_name: `${document.getElementById('last_name')}`,
+      phone: `${document.getElementById('phone')}`,
+      gender_orientation: `${document.getElementById('gender_orientation')}`,
+      city: `${document.getElementById('city')}`,
+      country: `${document.getElementById('country')}`,
+    };
+    console.log(reg_res.email.value);
+    return reg_res
+  });
 }, {
   once: true
 });
 
-const form_registr = document.forms['reg_form']
-setTimeout(()=> console.log(form_registr), 5000)
-// form_registr.addEventListener('submit', (e) => {
-//   e.preventDefault();
-//   console.log('vdfjfdjfkfjkdjfdkjfkdf')
-// });
