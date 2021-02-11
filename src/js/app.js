@@ -134,7 +134,7 @@ const reg_table = `
 </div>
 <div class="form-group" style="margin-top: 35px">
   <label for="gender_orientation" style="width: 39%">Gender orientation</label>
-  <select class="form-select" style="width: 60%">
+  <select class="form-select" style="width: 60%" id="gender_orientation">
   <option value="1">Male</option>
   <option value="2">Female</option>
   </select>
@@ -169,28 +169,28 @@ const reg_table = `
 </div>
 `
 
-const block1 = document.getElementById('block1');
+const card = document.getElementById('card');
 btn_reg.addEventListener('click', () => {
-  block1.innerHTML = '';
-  block1.innerHTML = reg_table;
+  card.innerHTML = '';
+  card.innerHTML = reg_table;
   const form_registr = document.forms['reg_form']
   form_registr.addEventListener('submit', (e) => {
     e.preventDefault();
     const reg_res = {
-      email: document.getElementById('email'),
-      password: `${document.getElementById('password')}`,
-      nickname: `${document.getElementById('nickname')}`,
-      first_name: `${document.getElementById('first_name')}`,
-      last_name: `${document.getElementById('last_name')}`,
-      phone: `${document.getElementById('phone')}`,
-      gender_orientation: `${document.getElementById('gender_orientation')}`,
-      city: `${document.getElementById('city')}`,
-      country: `${document.getElementById('country')}`,
+      email: document.getElementById('email').value,
+      password: document.getElementById('password').value,
+      nickname: document.getElementById('nickname').value,
+      first_name: document.getElementById('first_name').value,
+      last_name: document.getElementById('last_name').value,
+      phone: document.getElementById('phone').value,
+      gender_orientation: document.getElementById('gender_orientation').options[document.getElementById('gender_orientation').selectedIndex].text,
+      city: document.getElementById('city').value,
+      country: document.getElementById('country').value,
+      
     };
-    console.log(reg_res.email.value);
+    console.log(reg_res)
     return reg_res
   });
 }, {
   once: true
 });
-
