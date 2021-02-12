@@ -18,6 +18,10 @@ import {
 import {
   getNews
 } from './services/news.services'
+import {
+  postReg
+} from './services/auth.service'
+
 
 const {
   form,
@@ -90,6 +94,7 @@ const reg_table = `
     id="password"
     placeholder="Password"
     data-required="password"
+    data-invalid-message="Please provide valid password .!.."
   />
 </div>
 <div class="form-group">
@@ -135,8 +140,8 @@ const reg_table = `
 <div class="form-group" style="margin-top: 35px">
   <label for="gender_orientation" style="width: 39%">Gender orientation</label>
   <select class="form-select" style="width: 60%" id="gender_orientation">
-  <option value="1">Male</option>
-  <option value="2">Female</option>
+  <option value="1">male</option>
+  <option value="2">female</option>
   </select>
 </div>
 <div class="form-group">
@@ -176,6 +181,7 @@ btn_reg.addEventListener('click', () => {
   const form_registr = document.forms['reg_form']
   form_registr.addEventListener('submit', (e) => {
     e.preventDefault();
+    let date = document.getElementById('date').value.split('-');
     const reg_res = {
       email: document.getElementById('email').value,
       password: document.getElementById('password').value,
@@ -186,10 +192,12 @@ btn_reg.addEventListener('click', () => {
       gender_orientation: document.getElementById('gender_orientation').options[document.getElementById('gender_orientation').selectedIndex].text,
       city: document.getElementById('city').value,
       country: document.getElementById('country').value,
-      
+      date_of_birth_day: date[2],
+      date_of_birth_month: date[1],
+      date_of_birth_year: date[0],
     };
-    console.log(reg_res)
-    return reg_res
+    postReg(reg_res)
+    console.log(postReg(reg_res))
   });
 }, {
   once: true

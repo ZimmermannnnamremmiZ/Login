@@ -19,3 +19,14 @@ export async function login(email, password) {
         return Promise.reject(err);
     }
 }
+
+export async function postReg(object) {
+    try {
+        const response = await axios.post('/auth/signup', JSON.stringify(object));
+        console.log(response);
+        return response.data;
+    } catch (err) {
+        console.log(err);
+        return Promise.reject(err);
+    }
+}
