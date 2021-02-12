@@ -21,7 +21,7 @@ import {
 import {
   postReg
 } from './services/auth.service'
-
+import { getCountries } from './services/autocomplete'
 
 const {
   form,
@@ -197,8 +197,21 @@ btn_reg.addEventListener('click', () => {
       date_of_birth_year: date[0],
     };
     postReg(reg_res)
+
     console.log(postReg(reg_res))
   });
 }, {
   once: true
 });
+
+
+console.log(Array.from(getCountries()))
+
+
+// $( function() {
+//   var availableTags =
+//     getCountries();
+//   $( "#country" ).autocomplete({
+//     source: availableTags
+//   });
+// } );
