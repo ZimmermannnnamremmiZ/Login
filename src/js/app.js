@@ -204,10 +204,8 @@ btn_reg.addEventListener('click', () => {
   once: true
 });
 
-
-console.log(Array.from(getCountries()))
-
-
+getCountries();
+getCountries().then(objCountries => {return console.log(objCountries)})
 // $( function() {
 //   var availableTags =
 //     getCountries();
