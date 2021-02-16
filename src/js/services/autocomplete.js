@@ -3,8 +3,7 @@ import axios from '../plugins/axios';
 export async function getCountries() {
     try {
         let countries = await axios.get('/location/get-countries');
-        countries.values;
-        return countries
+        return countries;
     } catch (err) {
         console.log(err);
         return Promise.reject(err);

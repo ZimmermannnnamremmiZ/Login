@@ -21,7 +21,9 @@ import {
 import {
   postReg
 } from './services/auth.service'
-import { getCountries } from './services/autocomplete'
+import {
+  getCountries
+} from './services/autocomplete'
 
 const {
   form,
@@ -179,6 +181,18 @@ btn_reg.addEventListener('click', () => {
   card.innerHTML = '';
   card.innerHTML = reg_table;
   const form_registr = document.forms['reg_form']
+  getCountries().then(objCountries => {
+    
+    let val = Object.keys(objCountries)
+    let autocomplete =  $( function() {
+      var availableTags = Object.values(objCountries);
+      $( "#country" ).autocomplete({
+        source: availableTags
+      });
+    } );
+    return autocomplete
+  })
+  
   form_registr.addEventListener('submit', (e) => {
     e.preventDefault();
     let date = document.getElementById('date').value.split('-');
@@ -204,12 +218,3 @@ btn_reg.addEventListener('click', () => {
   once: true
 });
 
-getCountries();
-getCountries().then(objCountries => {return console.log(objCountries)})
-// $( function() {
-//   var availableTags =
-//     getCountries();
-//   $( "#country" ).autocomplete({
-//     source: availableTags
-//   });
-// } );
