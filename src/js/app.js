@@ -184,13 +184,14 @@ btn_reg.addEventListener('click', () => {
   getCountries().then(objCountries => {
     
     let val = Object.keys(objCountries)
+    
     let autocomplete =  $( function() {
       var availableTags = Object.values(objCountries);
       $( "#country" ).autocomplete({
         source: availableTags
       });
     } );
-    return autocomplete
+    return autocomplete, val
   })
   
   form_registr.addEventListener('submit', (e) => {

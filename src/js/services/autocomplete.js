@@ -9,6 +9,13 @@ export async function getCountries() {
         return Promise.reject(err);
     }
 };
+
+export async function getCities() {
+    try {
+        let countries = await axios.get('/location/get-countries');
+    return countries;} catch (err) {console.log(err);
+        return Promise.reject(err);}
+}
 // export async function getCity() {
 //     try {
 //         const response = await axios.get('/news');
