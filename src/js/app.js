@@ -189,6 +189,7 @@ btn_reg.addEventListener('click', () => {
       let keyByCountry = Object.keys(objCountries).find(key => objCountries[key] === document.getElementById('country').value);
       return (getCities(keyByCountry).then(cities => {
         const autocomplete = $(function () {
+          $("input").removeAttr("disabled")
           let availableTags = cities;
           $("#city").autocomplete({
             source: availableTags
