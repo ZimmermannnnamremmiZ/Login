@@ -1,29 +1,14 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import '../css/style.css';
-
 import UI from './config/ui.config';
-import {
-  validate
-} from './helpers/validate';
-import {
-  showInputError,
-  removeInputError
-} from './views/form'
-import {
-  login
-} from './services/auth.service';
-import {
-  notify
-} from './views/notifications';
-import {
-  getNews
-} from './services/news.services'
-import {
-  postReg
-} from './services/auth.service'
-import {
-  getCountries
-} from './services/autocomplete'
+import {validate} from './helpers/validate';
+import {showInputError, removeInputError} from './views/form'
+import {login} from './services/auth.service';
+import {notify} from './views/notifications';
+import {getNews} from './services/news.services'
+import {postReg} from './services/auth.service'
+import {getCountries} from './services/autocomplete'
+import {getCities} from './services/autocomplete'
 
 const {
   form,
@@ -147,16 +132,6 @@ const reg_table = `
   </select>
 </div>
 <div class="form-group">
-  <label for="city">City</label>
-  <input
-    type="text"
-    class="form-control"
-    id="city"
-    placeholder="City"
-    data-required="city"
-  />
-</div>
-<div class="form-group">
   <label for="country">Country</label>
   <input
     type="text"
@@ -164,6 +139,16 @@ const reg_table = `
     id="country"
     placeholder="Country"
     data-required="country"
+  />
+</div>
+<div class="form-group">
+  <label for="city">City</label>
+  <input
+    type="text"
+    class="form-control"
+    id="city"
+    placeholder="City"
+    data-required="city"
   />
 </div>
 <div class="form-group" style="margin-top: 35px">
@@ -181,19 +166,39 @@ btn_reg.addEventListener('click', () => {
   card.innerHTML = '';
   card.innerHTML = reg_table;
   const form_registr = document.forms['reg_form']
+
+  // Autocomplete for countries (BEGIN)
   getCountries().then(objCountries => {
-    
-    let val = Object.keys(objCountries)
-    
-    let autocomplete =  $( function() {
-      var availableTags = Object.values(objCountries);
-      $( "#country" ).autocomplete({
+    const autocomplete = $(function () {
+      let availableTags = Object.values(objCountries);
+      $("#country").autocomplete({
         source: availableTags
       });
-    } );
-    return autocomplete, val
+    });
+    return autocomplete
   })
+  // Autocomplete for countries (END)
   
+  
+  
+  // Autocomplete for cities (BEGIN)
+  getCountries().then(objCountries => {
+    document.getElementById('country').addEventListener('change', () => {
+      let keyByCountry = Object.keys(objCountries).find(key => objCountries[key] === document.getElementById('country').value);
+      return (getCities(keyByCountry).then(cities => {
+        const autocomplete = $(function () {
+          let availableTags = cities;
+          $("#city").autocomplete({
+            source: availableTags
+          });
+        });
+        return autocomplete
+      }));
+    })
+  })
+// Autocomplete for cities (END)
+
+
   form_registr.addEventListener('submit', (e) => {
     e.preventDefault();
     let date = document.getElementById('date').value.split('-');
@@ -218,4 +223,3 @@ btn_reg.addEventListener('click', () => {
 }, {
   once: true
 });
-

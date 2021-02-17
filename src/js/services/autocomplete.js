@@ -10,20 +10,12 @@ export async function getCountries() {
     }
 };
 
-export async function getCities() {
+export async function getCities(key) {
     try {
-        let countries = await axios.get('/location/get-countries');
-    return countries;} catch (err) {console.log(err);
-        return Promise.reject(err);}
+        let cities = await axios.get(`location/get-cities/${key}`);
+        return cities;
+    } catch (err) {
+        console.log(err);
+        return Promise.reject(err);
+    }
 }
-// export async function getCity() {
-//     try {
-//         const response = await axios.get('/news');
-
-//         console.log(response);
-//         return response;
-//     } catch (err) {
-//         console.log(err);
-//         return Promise.reject(err);
-//     }
-// }
