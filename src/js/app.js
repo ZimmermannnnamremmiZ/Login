@@ -149,6 +149,7 @@ const reg_table = `
     id="city"
     placeholder="City"
     data-required="city"
+    disabled
   />
 </div>
 <div class="form-group" style="margin-top: 35px">
@@ -183,7 +184,8 @@ btn_reg.addEventListener('click', () => {
   
   // Autocomplete for cities (BEGIN)
   getCountries().then(objCountries => {
-    document.getElementById('country').addEventListener('change', () => {
+    let countryInput = document.getElementById('country');
+    countryInput.addEventListener('change', () => {
       let keyByCountry = Object.keys(objCountries).find(key => objCountries[key] === document.getElementById('country').value);
       return (getCities(keyByCountry).then(cities => {
         const autocomplete = $(function () {
